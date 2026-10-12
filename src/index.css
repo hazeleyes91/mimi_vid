@@ -1,0 +1,170 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body, #root {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background-color: #050b07;
+  color: #00ff66;
+  font-family: 'JetBrains Mono', 'Courier New', Courier, monospace;
+  user-select: none;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* CRT Scanlines Overlay - Subtle and Non-Blurry */
+.crt-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 100;
+  background: linear-gradient(
+    rgba(18, 16, 16, 0) 50%,
+    rgba(0, 0, 0, 0.25) 50%
+  );
+  background-size: 100% 4px;
+}
+
+/* Base Terminal Stream - Razor-Sharp, Zero Blur */
+.dna-matrix-text {
+  text-shadow: none;
+  font-variant-ligatures: none;
+}
+
+/* Base Character Colors */
+.base-A { color: #00ff66; }
+.base-T { color: #00cc55; }
+.base-C { color: #33ff88; }
+.base-G { color: #009944; }
+
+/* Non-Visual / Telemetry High-Contrast Typography (Crisp, High Contrast) */
+.telemetry-bold {
+  font-weight: 800;
+  letter-spacing: 0.05em;
+}
+
+.telemetry-white {
+  color: #ffffff;
+  text-shadow: none;
+}
+
+.telemetry-cyan {
+  color: #00e5ff;
+  text-shadow: none;
+}
+
+.telemetry-amber {
+  color: #ffb800;
+  text-shadow: none;
+}
+
+.telemetry-alert {
+  color: #ff3333;
+  text-shadow: none;
+}
+
+.telemetry-emerald {
+  color: #00ffaa;
+  text-shadow: none;
+}
+
+/* Non-Visual Text Badges & Banners (Clean Solid Outlines, No Blurry Glows) */
+.telemetry-banner {
+  background: rgba(3, 18, 10, 0.96);
+  border: 1px solid #00e5ff;
+  border-radius: 4px;
+  padding: 8px 14px;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #ffffff;
+  box-shadow: none;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.telemetry-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(0, 20, 10, 0.94);
+  border: 1px solid currentColor;
+  border-radius: 4px;
+  padding: 6px 14px;
+  font-size: 1.2rem;
+  font-weight: 800;
+}
+
+/* Cursor Pulse */
+@keyframes cursorBlink {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+
+.cursor-pulse {
+  display: inline-block;
+  animation: cursorBlink 1s infinite;
+  color: #00e5ff;
+  font-weight: 900;
+}
+
+/* Recording Dot Blink */
+@keyframes recBlink {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0.2; }
+}
+
+.rec-dot {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #ff2222;
+  box-shadow: 0 0 3px #ff2222;
+  animation: recBlink 1s infinite;
+}
+
+/* Scene Switcher Dock (discreet bottom HUD) */
+.scene-dock {
+  position: fixed;
+  bottom: 8px;
+  right: 12px;
+  z-index: 200;
+  display: flex;
+  gap: 6px;
+  background: rgba(0, 15, 8, 0.92);
+  border: 1px solid rgba(0, 255, 102, 0.4);
+  border-radius: 4px;
+  padding: 4px 8px;
+  font-size: 0.75rem;
+}
+
+.scene-btn {
+  background: transparent;
+  border: 1px solid rgba(0, 255, 102, 0.4);
+  border-radius: 3px;
+  color: #00cc55;
+  padding: 2px 8px;
+  font-family: inherit;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.scene-btn.active {
+  background: #00ffaa;
+  color: #050b07;
+  font-weight: 800;
+  border-color: #00ffaa;
+}
+
+.scene-btn:hover {
+  background: rgba(0, 255, 170, 0.25);
+  color: #ffffff;
+}

@@ -59,3 +59,22 @@ When removing non-process speed metrics from `Terminal2.tsx`, `streamRate` was l
 ### Applied Fix
 Removed the unused `streamRate` state declaration and setter call from `src/components/Terminal2.tsx`. Production build (`tsc && vite build`) passed with zero errors.
 
+---
+
+## Anomaly Entry 5: Vercel CLI Legacy Authentication Deprecation (HTTP 410) [RESOLVED]
+
+### Observed Failure / Stack Trace
+```text
+Vercel CLI 41.7.6
+Sending you an email
+Error: Unexpected error: The legacy authentication flow is disabled. Please upgrade the Vercel CLI to the latest version. See https://vercel.com/changelog/new-vercel-cli-login-flow (410)
+```
+
+### Suspected Root Cause
+Installed global Vercel CLI version 41.7.6 attempts legacy email auth endpoint deprecated by Vercel.
+
+### Applied Fix
+Invoked OAuth device authorization flow (`vercel login --future`), successfully generating verification session waiting on user authorization.
+
+
+

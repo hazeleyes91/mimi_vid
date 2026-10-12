@@ -250,8 +250,8 @@ export const Terminal2: React.FC<Terminal2Props> = ({ initialState = 'TYPING' })
     };
   }, [subState]);
 
-  // Generate Circular Nucleotide Track Bases
-  const ringRadius = 240;
+  // Generate Circular Nucleotide Track Bases (Enlarged Scale)
+  const ringRadius = 320;
   const numRingBases = 180;
   const ringBases = Array.from({ length: numRingBases }, (_, i) => {
     const angleDeg = (i / numRingBases) * 360;
@@ -461,12 +461,12 @@ export const Terminal2: React.FC<Terminal2Props> = ({ initialState = 'TYPING' })
         </div>
       )}
 
-      {/* STATE 4: CIRCULAR NUCLEOTIDE RING MORPH (ZERO BLUR) */}
+      {/* STATE 4: CIRCULAR NUCLEOTIDE RING MORPH (ENLARGED DISPLAY, ZERO BLUR) */}
       {subState === 'RING' && (
         <div style={{ flex: 1, position: 'relative', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-          <svg width="680" height="680" viewBox="-340 -340 680 680" style={{ transform: `rotate(${ringAngle}deg)` }}>
-            <circle cx="0" cy="0" r={ringRadius - 20} fill="none" stroke="rgba(0, 255, 102, 0.2)" strokeWidth="1" strokeDasharray="4 4" />
-            <circle cx="0" cy="0" r={ringRadius + 20} fill="none" stroke="rgba(0, 255, 102, 0.2)" strokeWidth="1" strokeDasharray="4 4" />
+          <svg width="880" height="880" viewBox="-440 -440 880 880" style={{ transform: `rotate(${ringAngle}deg)` }}>
+            <circle cx="0" cy="0" r={ringRadius - 26} fill="none" stroke="rgba(0, 255, 102, 0.25)" strokeWidth="1.5" strokeDasharray="5 5" />
+            <circle cx="0" cy="0" r={ringRadius + 26} fill="none" stroke="rgba(0, 255, 102, 0.25)" strokeWidth="1.5" strokeDasharray="5 5" />
 
             {/* 11 Gene Arcs with Boundaries */}
             {PHIX174_GENES.map(gene => {
@@ -475,12 +475,12 @@ export const Terminal2: React.FC<Terminal2Props> = ({ initialState = 'TYPING' })
               const arcLength = gene.endAngle >= gene.startAngle ? gene.endAngle - gene.startAngle : 360 - gene.startAngle + gene.endAngle;
               const largeArcFlag = arcLength > 180 ? 1 : 0;
 
-              const x1 = (ringRadius + 28) * Math.cos(startRad);
-              const y1 = (ringRadius + 28) * Math.sin(startRad);
-              const x2 = (ringRadius + 28) * Math.cos(endRad);
-              const y2 = (ringRadius + 28) * Math.sin(endRad);
+              const x1 = (ringRadius + 36) * Math.cos(startRad);
+              const y1 = (ringRadius + 36) * Math.sin(startRad);
+              const x2 = (ringRadius + 36) * Math.cos(endRad);
+              const y2 = (ringRadius + 36) * Math.sin(endRad);
 
-              const pathData = `M ${x1} ${y1} A ${ringRadius + 28} ${ringRadius + 28} 0 ${largeArcFlag} 1 ${x2} ${y2}`;
+              const pathData = `M ${x1} ${y1} A ${ringRadius + 36} ${ringRadius + 36} 0 ${largeArcFlag} 1 ${x2} ${y2}`;
 
               return (
                 <path
@@ -488,13 +488,13 @@ export const Terminal2: React.FC<Terminal2Props> = ({ initialState = 'TYPING' })
                   d={pathData}
                   fill="none"
                   stroke={gene.color}
-                  strokeWidth="3"
-                  strokeOpacity="0.9"
+                  strokeWidth="5"
+                  strokeOpacity="0.95"
                 />
               );
             })}
 
-            {/* Preserved ATCG Nucleotide Bases (Zero Blur) */}
+            {/* Preserved ATCG Nucleotide Bases (Enlarged 16px, Zero Blur) */}
             {ringBases.map((base, idx) => {
               const rad = ((base.angleDeg - 90) * Math.PI) / 180;
               const x = ringRadius * Math.cos(rad);
@@ -508,7 +508,7 @@ export const Terminal2: React.FC<Terminal2Props> = ({ initialState = 'TYPING' })
                   textAnchor="middle"
                   dominantBaseline="central"
                   fill={BASE_COLORS[base.char]}
-                  fontSize="12px"
+                  fontSize="16px"
                   fontFamily="JetBrains Mono, monospace"
                   fontWeight="bold"
                   transform={`rotate(${base.angleDeg}, ${x}, ${y})`}
@@ -519,14 +519,14 @@ export const Terminal2: React.FC<Terminal2Props> = ({ initialState = 'TYPING' })
             })}
           </svg>
 
-          {/* Gene Callout Overlay Tags (Zero Blur) */}
-          <div style={{ position: 'absolute', pointerEvents: 'none', width: '680px', height: '680px' }}>
+          {/* Gene Callout Overlay Tags (Enlarged, Zero Blur) */}
+          <div style={{ position: 'absolute', pointerEvents: 'none', width: '880px', height: '880px' }}>
             {PHIX174_GENES.map(gene => {
               const midAngle = gene.endAngle >= gene.startAngle ? (gene.startAngle + gene.endAngle) / 2 : ((gene.startAngle + gene.endAngle + 360) / 2) % 360;
               const rad = ((midAngle + ringAngle - 90) * Math.PI) / 180;
-              const labelDist = ringRadius + 64;
-              const lx = 340 + labelDist * Math.cos(rad);
-              const ly = 340 + labelDist * Math.sin(rad);
+              const labelDist = ringRadius + 75;
+              const lx = 440 + labelDist * Math.cos(rad);
+              const ly = 440 + labelDist * Math.sin(rad);
 
               return (
                 <div
@@ -536,14 +536,15 @@ export const Terminal2: React.FC<Terminal2Props> = ({ initialState = 'TYPING' })
                     left: `${lx}px`,
                     top: `${ly}px`,
                     transform: 'translate(-50%, -50%)',
-                    background: 'rgba(0, 18, 10, 0.95)',
-                    border: `1px solid ${gene.color}`,
-                    borderRadius: '4px',
-                    padding: '2px 8px',
-                    fontSize: '0.85rem',
+                    background: 'rgba(0, 18, 10, 0.96)',
+                    border: `1.5px solid ${gene.color}`,
+                    borderRadius: '5px',
+                    padding: '3px 10px',
+                    fontSize: '1.1rem',
                     fontWeight: 800,
                     color: gene.color,
                     whiteSpace: 'nowrap',
+                    boxShadow: '0 2px 8px rgba(0,0,0,0.8)',
                   }}
                 >
                   {gene.name}
@@ -552,25 +553,25 @@ export const Terminal2: React.FC<Terminal2Props> = ({ initialState = 'TYPING' })
             })}
           </div>
 
-          {/* Central Topology HUD (Zero Blur) */}
+          {/* Central Topology HUD (Enlarged, Zero Blur) */}
           <div
             style={{
               position: 'absolute',
               textAlign: 'center',
               pointerEvents: 'none',
-              background: 'rgba(2, 20, 12, 0.96)',
-              border: '1px solid #00E5FF',
+              background: 'rgba(2, 20, 12, 0.98)',
+              border: '2px solid #00E5FF',
               borderRadius: '8px',
-              padding: '16px 24px',
+              padding: '20px 32px',
             }}
           >
-            <div className="telemetry-bold telemetry-cyan" style={{ fontSize: '1.25rem', marginBottom: '6px' }}>
+            <div className="telemetry-bold telemetry-cyan" style={{ fontSize: '1.5rem', marginBottom: '8px' }}>
               PHI-X174 CIRCULAR CHROMOSOME
             </div>
-            <div className="telemetry-bold telemetry-white" style={{ fontSize: '1.05rem', marginBottom: '4px' }}>
+            <div className="telemetry-bold telemetry-white" style={{ fontSize: '1.25rem', marginBottom: '6px' }}>
               LENGTH: 5,386 BP // ssDNA
             </div>
-            <div className="telemetry-bold telemetry-emerald" style={{ fontSize: '0.95rem' }}>
+            <div className="telemetry-bold telemetry-emerald" style={{ fontSize: '1.1rem' }}>
               11 CODING ARCS // CONTINUOUS ROTATION
             </div>
           </div>

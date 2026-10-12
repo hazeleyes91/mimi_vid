@@ -76,5 +76,18 @@ Installed global Vercel CLI version 41.7.6 attempts legacy email auth endpoint d
 ### Applied Fix
 Invoked OAuth device authorization flow (`vercel login --future`), successfully generating verification session waiting on user authorization.
 
+---
 
+## Anomaly Entry 6: TypeScript Unused Local TS6133 in Terminal4.tsx [RESOLVED]
+
+### Observed Failure / Stack Trace
+```text
+src/components/Terminal4.tsx(146,13): error TS6133: 'u' is declared but its value is never read.
+```
+
+### Suspected Root Cause
+In `src/components/Terminal4.tsx` inside the LPS nodule generation loop, random variable `u` was declared but not referenced.
+
+### Applied Fix
+Removed the unused local `u` variable from `Terminal4.tsx`. Production build (`tsc && vite build`) passed with zero errors.
 

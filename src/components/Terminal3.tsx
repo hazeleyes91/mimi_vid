@@ -140,8 +140,8 @@ export const Terminal3: React.FC<Terminal3Props> = ({ initialPass = 'SWEEP' }) =
     }
   }, [activePass]);
 
-  // Nucleotide ring layout
-  const ringRadius = 240;
+  // Nucleotide ring layout (Enlarged Scale)
+  const ringRadius = 320;
   const numRingBases = 180;
   const ringBases = Array.from({ length: numRingBases }, (_, i) => {
     const angleDeg = (i / numRingBases) * 360;
@@ -158,20 +158,20 @@ export const Terminal3: React.FC<Terminal3Props> = ({ initialPass = 'SWEEP' }) =
 
   // Calculate sweep ray coordinates
   const sweepRad = ((sweepAngle - 90) * Math.PI) / 180;
-  const sweepX = (ringRadius + 30) * Math.cos(sweepRad);
-  const sweepY = (ringRadius + 30) * Math.sin(sweepRad);
+  const sweepX = (ringRadius + 38) * Math.cos(sweepRad);
+  const sweepY = (ringRadius + 38) * Math.sin(sweepRad);
 
   return (
     <div style={{ position: 'relative', width: '100vw', height: '100vh', padding: '32px', display: 'flex', flexDirection: 'column' }}>
       {/* Header Banner */}
       <div className="telemetry-banner" style={{ width: '100%', marginBottom: '20px' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          <span className="telemetry-bold telemetry-cyan" style={{ fontSize: '1.4rem' }}>
+          <span className="telemetry-bold telemetry-cyan" style={{ fontSize: '1.8rem' }}>
             {activePass === 'SWEEP' && 'FILTER 01: GENETIC ARCHITECTURE INTEGRITY SCAN'}
             {activePass === 'RETICLE' && 'FILTER 02: HOST TROPISM & SPIKE SPECIFICITY LOCK'}
             {activePass === 'ODOMETER' && 'FILTER 03: NOVEL SPECIES DIVERSIFICATION MATCH'}
           </span>
-          <div style={{ display: 'flex', gap: '8px' }}>
+          <div style={{ display: 'flex', gap: '10px' }}>
             {[
               { id: 'SWEEP', label: '[6] ARCHITECTURE SCAN' },
               { id: 'RETICLE', label: '[7] TROPISM LOCK' },
@@ -183,12 +183,12 @@ export const Terminal3: React.FC<Terminal3Props> = ({ initialPass = 'SWEEP' }) =
                 style={{
                   background: activePass === tab.id ? '#00FFAA' : 'rgba(0, 30, 15, 0.9)',
                   color: activePass === tab.id ? '#050B07' : '#00E5FF',
-                  border: '1px solid #00E5FF',
-                  borderRadius: '4px',
-                  padding: '4px 10px',
+                  border: '1.5px solid #00E5FF',
+                  borderRadius: '5px',
+                  padding: '6px 14px',
                   fontFamily: 'inherit',
                   fontWeight: 800,
-                  fontSize: '0.85rem',
+                  fontSize: '1.0rem',
                   cursor: 'pointer',
                 }}
               >
@@ -197,20 +197,20 @@ export const Terminal3: React.FC<Terminal3Props> = ({ initialPass = 'SWEEP' }) =
             ))}
           </div>
         </div>
-        <div className="telemetry-bold telemetry-white" style={{ fontSize: '1.05rem', opacity: 0.9 }}>
+        <div className="telemetry-bold telemetry-white" style={{ fontSize: '1.25rem', opacity: 0.95, marginTop: '6px' }}>
           {activePass === 'SWEEP' && `SCANNING 11 ESSENTIAL CODING ARCS FOR READING FRAME INTACTNESS [${validatedGeneCount}/11 VALIDATED]`}
           {activePass === 'RETICLE' && 'TARGETING MAJOR SPIKE PROTEIN (GENE G) FOR E. COLI C RECEPTOR BINDING [LOCKED]'}
           {activePass === 'ODOMETER' && 'PAIRWISE SEQUENCE ALIGNMENT AGAINST NATURAL PHIX174 WILD-TYPE (<95.0% DIVERGENCE THRESHOLD)'}
         </div>
       </div>
 
-      {/* PASS 1: ARCHITECTURE SCANLINE RADAR (ZERO BLUR) */}
+      {/* PASS 1: ARCHITECTURE SCANLINE RADAR (ENLARGED DISPLAY, ZERO BLUR) */}
       {activePass === 'SWEEP' && (
         <div style={{ flex: 1, position: 'relative', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-          <svg width="680" height="680" viewBox="-340 -340 680 680">
-            <circle cx="0" cy="0" r={ringRadius - 30} fill="none" stroke="rgba(0, 229, 255, 0.25)" strokeWidth="1" />
-            <circle cx="0" cy="0" r={ringRadius} fill="none" stroke="rgba(0, 255, 102, 0.25)" strokeWidth="1" strokeDasharray="3 3" />
-            <circle cx="0" cy="0" r={ringRadius + 30} fill="none" stroke="rgba(0, 229, 255, 0.25)" strokeWidth="1" />
+          <svg width="880" height="880" viewBox="-440 -440 880 880">
+            <circle cx="0" cy="0" r={ringRadius - 38} fill="none" stroke="rgba(0, 229, 255, 0.3)" strokeWidth="1.5" />
+            <circle cx="0" cy="0" r={ringRadius} fill="none" stroke="rgba(0, 255, 102, 0.3)" strokeWidth="1.5" strokeDasharray="4 4" />
+            <circle cx="0" cy="0" r={ringRadius + 38} fill="none" stroke="rgba(0, 229, 255, 0.3)" strokeWidth="1.5" />
 
             {/* Gene Arc Sectors */}
             {PHIX174_GENES.map(gene => {
@@ -219,24 +219,24 @@ export const Terminal3: React.FC<Terminal3Props> = ({ initialPass = 'SWEEP' }) =
               const endRad = ((gene.endAngle - 90) * Math.PI) / 180;
               const arcLength = gene.endAngle >= gene.startAngle ? gene.endAngle - gene.startAngle : 360 - gene.startAngle + gene.endAngle;
               const largeArcFlag = arcLength > 180 ? 1 : 0;
-              const x1 = (ringRadius + 28) * Math.cos(startRad);
-              const y1 = (ringRadius + 28) * Math.sin(startRad);
-              const x2 = (ringRadius + 28) * Math.cos(endRad);
-              const y2 = (ringRadius + 28) * Math.sin(endRad);
+              const x1 = (ringRadius + 36) * Math.cos(startRad);
+              const y1 = (ringRadius + 36) * Math.sin(startRad);
+              const x2 = (ringRadius + 36) * Math.cos(endRad);
+              const y2 = (ringRadius + 36) * Math.sin(endRad);
 
               return (
                 <path
                   key={gene.id}
-                  d={`M ${x1} ${y1} A ${ringRadius + 28} ${ringRadius + 28} 0 ${largeArcFlag} 1 ${x2} ${y2}`}
+                  d={`M ${x1} ${y1} A ${ringRadius + 36} ${ringRadius + 36} 0 ${largeArcFlag} 1 ${x2} ${y2}`}
                   fill="none"
                   stroke={isPassed ? '#00FFAA' : gene.color}
-                  strokeWidth="4"
-                  strokeOpacity={isPassed ? 1 : 0.7}
+                  strokeWidth="7"
+                  strokeOpacity={isPassed ? 1 : 0.75}
                 />
               );
             })}
 
-            {/* Circular Monospace ATCG Bases (Zero Blur) */}
+            {/* Circular Monospace ATCG Bases (Enlarged 16px/18px, Zero Blur) */}
             {ringBases.map((base, idx) => {
               const rad = ((base.angleDeg - 90) * Math.PI) / 180;
               const x = ringRadius * Math.cos(rad);
@@ -252,7 +252,7 @@ export const Terminal3: React.FC<Terminal3Props> = ({ initialPass = 'SWEEP' }) =
                   textAnchor="middle"
                   dominantBaseline="central"
                   fill={isIlluminated ? '#FFFFFF' : BASE_COLORS[base.char]}
-                  fontSize={isIlluminated ? '14px' : '12px'}
+                  fontSize={isIlluminated ? '18px' : '16px'}
                   fontFamily="JetBrains Mono, monospace"
                   fontWeight="bold"
                   transform={`rotate(${base.angleDeg}, ${x}, ${y})`}
@@ -269,97 +269,97 @@ export const Terminal3: React.FC<Terminal3Props> = ({ initialPass = 'SWEEP' }) =
               x2={sweepX}
               y2={sweepY}
               stroke="#00E5FF"
-              strokeWidth="2"
+              strokeWidth="3"
             />
           </svg>
 
-          {/* Sweep Diagnostic Readout Badge */}
-          <div style={{ position: 'absolute', bottom: '20px' }}>
-            <span className="telemetry-pill telemetry-emerald" style={{ fontSize: '1.4rem' }}>
+          {/* Sweep Diagnostic Readout Badge (Enlarged 1.85rem) */}
+          <div style={{ position: 'absolute', bottom: '24px' }}>
+            <span className="telemetry-pill telemetry-emerald" style={{ fontSize: '1.85rem', padding: '12px 28px' }}>
               &gt; SCANNING ARCHITECTURE... {validatedGeneCount}/11 GENES VALIDATED [OK]
             </span>
           </div>
         </div>
       )}
 
-      {/* PASS 2: HOST TROPISM RETICLE (TARGET LOCK ON GENE G, ZERO BLUR) */}
+      {/* PASS 2: HOST TROPISM RETICLE (TARGET LOCK ON GENE G, ENLARGED DISPLAY) */}
       {activePass === 'RETICLE' && (
         <div style={{ flex: 1, position: 'relative', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
           <div
             style={{
               background: 'rgba(2, 20, 10, 0.98)',
-              border: `2px solid ${isReticleLocked ? '#FFB800' : '#00E5FF'}`,
-              borderRadius: '8px',
-              padding: '28px 36px',
-              width: '580px',
+              border: `2.5px solid ${isReticleLocked ? '#FFB800' : '#00E5FF'}`,
+              borderRadius: '10px',
+              padding: '36px 48px',
+              width: '840px',
               position: 'relative',
             }}
           >
-            <div style={{ position: 'absolute', top: '8px', left: '8px', fontSize: '1.2rem', color: '#FFB800' }}>┌</div>
-            <div style={{ position: 'absolute', top: '8px', right: '8px', fontSize: '1.2rem', color: '#FFB800' }}>┐</div>
-            <div style={{ position: 'absolute', bottom: '8px', left: '8px', fontSize: '1.2rem', color: '#FFB800' }}>└</div>
-            <div style={{ position: 'absolute', bottom: '8px', right: '8px', fontSize: '1.2rem', color: '#FFB800' }}>┘</div>
+            <div style={{ position: 'absolute', top: '10px', left: '10px', fontSize: '1.6rem', color: '#FFB800' }}>┌</div>
+            <div style={{ position: 'absolute', top: '10px', right: '10px', fontSize: '1.6rem', color: '#FFB800' }}>┐</div>
+            <div style={{ position: 'absolute', bottom: '10px', left: '10px', fontSize: '1.6rem', color: '#FFB800' }}>└</div>
+            <div style={{ position: 'absolute', bottom: '10px', right: '10px', fontSize: '1.6rem', color: '#FFB800' }}>┘</div>
 
-            <div style={{ textAlign: 'center', marginBottom: '16px' }}>
-              <span className="telemetry-bold telemetry-white" style={{ fontSize: '1.25rem' }}>
+            <div style={{ textAlign: 'center', marginBottom: '20px' }}>
+              <span className="telemetry-bold telemetry-white" style={{ fontSize: '1.5rem' }}>
                 CAMERA ZOOM // LOCUS GENE G (MAJOR SPIKE COMPLEX)
               </span>
             </div>
 
-            {/* Target Reticle Crosshair SVG */}
-            <div style={{ display: 'flex', justifyContent: 'center', margin: '20px 0' }}>
-              <svg width="220" height="130" viewBox="0 0 220 130">
-                <rect x="10" y="10" width="200" height="110" fill="none" stroke={isReticleLocked ? '#FFB800' : '#00E5FF'} strokeWidth="1.5" strokeDasharray="6 4" />
-                <line x1="110" y1="0" x2="110" y2="130" stroke={isReticleLocked ? '#FF4400' : '#00E5FF'} strokeWidth="1" strokeDasharray="3 3" />
-                <line x1="0" y1="65" x2="220" y2="65" stroke={isReticleLocked ? '#FF4400' : '#00E5FF'} strokeWidth="1" strokeDasharray="3 3" />
+            {/* Target Reticle Crosshair SVG (Enlarged 440x220) */}
+            <div style={{ display: 'flex', justifyContent: 'center', margin: '24px 0' }}>
+              <svg width="440" height="220" viewBox="0 0 440 220">
+                <rect x="15" y="15" width="410" height="190" fill="none" stroke={isReticleLocked ? '#FFB800' : '#00E5FF'} strokeWidth="2" strokeDasharray="8 5" />
+                <line x1="220" y1="0" x2="220" y2="220" stroke={isReticleLocked ? '#FF4400' : '#00E5FF'} strokeWidth="1.5" strokeDasharray="4 4" />
+                <line x1="0" y1="110" x2="440" y2="110" stroke={isReticleLocked ? '#FF4400' : '#00E5FF'} strokeWidth="1.5" strokeDasharray="4 4" />
 
-                <text x="110" y="55" fill={isReticleLocked ? '#FFB800' : '#00FF66'} fontSize="14px" fontWeight="bold" fontFamily="JetBrains Mono" textAnchor="middle">
+                <text x="220" y="95" fill={isReticleLocked ? '#FFB800' : '#00FF66'} fontSize="22px" fontWeight="bold" fontFamily="JetBrains Mono, monospace" textAnchor="middle">
                   A T G G T T C G T C A C
                 </text>
-                <text x="110" y="80" fill={isReticleLocked ? '#FFB800' : '#00FF66'} fontSize="14px" fontWeight="bold" fontFamily="JetBrains Mono" textAnchor="middle">
+                <text x="220" y="140" fill={isReticleLocked ? '#FFB800' : '#00FF66'} fontSize="22px" fontWeight="bold" fontFamily="JetBrains Mono, monospace" textAnchor="middle">
                   G G C T T T T T A G C A
                 </text>
               </svg>
             </div>
 
-            <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '12px', fontSize: '1.05rem' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '16px', fontSize: '1.35rem' }}>
               <span className="telemetry-bold telemetry-cyan">CODONS: 2395 - 2922 (175 AA)</span>
               <span className="telemetry-bold telemetry-amber">{isReticleLocked ? '[TARGET LOCKED]' : '[ACQUIRING...]'}</span>
             </div>
-            <div style={{ marginTop: '8px', fontSize: '1.05rem' }}>
+            <div style={{ marginTop: '12px', fontSize: '1.25rem' }}>
               <span className="telemetry-bold telemetry-white">RECEPTOR MOTIF: LIPOPOLYSACCHARIDE (LPS) GLYCAN CORE</span>
             </div>
           </div>
 
-          <div style={{ marginTop: '28px' }}>
-            <span className="telemetry-pill telemetry-amber" style={{ fontSize: '1.4rem' }}>
+          <div style={{ marginTop: '32px' }}>
+            <span className="telemetry-pill telemetry-amber" style={{ fontSize: '1.85rem', padding: '12px 28px' }}>
               &gt; ISOLATING SPIKE PROTEIN (GENE G)... HOST TROPISM LOCKED: E. COLI C
             </span>
           </div>
         </div>
       )}
 
-      {/* PASS 3: DIVERSIFICATION DATABASE MATCH (ZERO BLUR) */}
+      {/* PASS 3: DIVERSIFICATION DATABASE MATCH (ENLARGED DISPLAY) */}
       {activePass === 'ODOMETER' && (
         <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
           {/* Dual Alignment Panel */}
-          <div style={{ display: 'flex', gap: '20px', marginBottom: '24px' }}>
+          <div style={{ display: 'flex', gap: '24px', marginBottom: '28px' }}>
             <div
               style={{
                 flex: 1,
                 background: 'rgba(2, 20, 10, 0.98)',
-                border: '1px solid #00E5FF',
-                borderRadius: '6px',
-                padding: '16px',
+                border: '1.5px solid #00E5FF',
+                borderRadius: '8px',
+                padding: '24px',
               }}
             >
-              <div className="telemetry-bold telemetry-cyan" style={{ fontSize: '1.25rem', marginBottom: '12px', borderBottom: '1px solid #00E5FF', paddingBottom: '6px' }}>
+              <div className="telemetry-bold telemetry-cyan" style={{ fontSize: '1.55rem', marginBottom: '16px', borderBottom: '1px solid #00E5FF', paddingBottom: '8px' }}>
                 GENERATED CANDIDATE: CAND_8812
               </div>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', fontSize: '1.05rem' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', fontSize: '1.3rem' }}>
                 {ALIGNMENT_DATA.map((row, i) => (
                   <div key={i} style={{ color: row.diff ? '#00FFAA' : '#FFFFFF', fontWeight: row.diff ? 800 : 500 }}>
-                    <span style={{ color: '#00E5FF', marginRight: '10px' }}>{row.index}:</span>
+                    <span style={{ color: '#00E5FF', marginRight: '12px' }}>{row.index}:</span>
                     <span>{row.cand}</span>
                   </div>
                 ))}
@@ -370,43 +370,43 @@ export const Terminal3: React.FC<Terminal3Props> = ({ initialPass = 'SWEEP' }) =
               style={{
                 flex: 1,
                 background: 'rgba(2, 20, 10, 0.98)',
-                border: '1px solid #00E5FF',
-                borderRadius: '6px',
-                padding: '16px',
+                border: '1.5px solid #00E5FF',
+                borderRadius: '8px',
+                padding: '24px',
               }}
             >
-              <div className="telemetry-bold telemetry-white" style={{ fontSize: '1.25rem', marginBottom: '12px', borderBottom: '1px solid #00E5FF', paddingBottom: '6px' }}>
+              <div className="telemetry-bold telemetry-white" style={{ fontSize: '1.55rem', marginBottom: '16px', borderBottom: '1px solid #00E5FF', paddingBottom: '8px' }}>
                 NATURAL REFERENCE: NC_001422.1 (WT)
               </div>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', fontSize: '1.05rem' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', fontSize: '1.3rem' }}>
                 {ALIGNMENT_DATA.map((row, i) => (
                   <div key={i} style={{ color: row.diff ? '#FFB800' : '#88AA99', fontWeight: row.diff ? 800 : 500 }}>
-                    <span style={{ color: '#00E5FF', marginRight: '10px' }}>{row.index}:</span>
+                    <span style={{ color: '#00E5FF', marginRight: '12px' }}>{row.index}:</span>
                     <span>{row.ref}</span>
-                    {row.diff && <span style={{ marginLeft: '12px', color: '#FFB800' }}>[MUTATION]</span>}
+                    {row.diff && <span style={{ marginLeft: '14px', color: '#FFB800' }}>[MUTATION]</span>}
                   </div>
                 ))}
               </div>
             </div>
           </div>
 
-          {/* High-Visibility Digital Odometer (Zero Blur) */}
+          {/* High-Visibility Digital Odometer (Enlarged 4.2rem) */}
           <div
             style={{
               background: 'rgba(0, 18, 10, 0.98)',
-              border: '2px solid #00FFAA',
-              borderRadius: '8px',
-              padding: '16px 28px',
+              border: '2.5px solid #00FFAA',
+              borderRadius: '10px',
+              padding: '20px 36px',
               display: 'flex',
               justifyContent: 'space-between',
               alignItems: 'center',
             }}
           >
             <div>
-              <div className="telemetry-bold telemetry-white" style={{ fontSize: '1.3rem', marginBottom: '4px' }}>
+              <div className="telemetry-bold telemetry-white" style={{ fontSize: '1.6rem', marginBottom: '6px' }}>
                 AMINO ACID IDENTITY (AAI) ODOMETER
               </div>
-              <div className="telemetry-bold telemetry-cyan" style={{ fontSize: '1.05rem' }}>
+              <div className="telemetry-bold telemetry-cyan" style={{ fontSize: '1.25rem' }}>
                 DIVERSIFICATION CUTOFF THRESHOLD: &lt; 95.0% [LOOPING]
               </div>
             </div>
@@ -414,10 +414,10 @@ export const Terminal3: React.FC<Terminal3Props> = ({ initialPass = 'SWEEP' }) =
             <div
               style={{
                 background: '#021008',
-                border: '2px solid #00FFAA',
-                borderRadius: '6px',
-                padding: '6px 24px',
-                fontSize: '2.8rem',
+                border: '2.5px solid #00FFAA',
+                borderRadius: '8px',
+                padding: '10px 32px',
+                fontSize: '4.2rem',
                 fontWeight: 900,
                 color: odometerValue < 95.0 ? '#00FFAA' : '#FFFFFF',
                 letterSpacing: '0.08em',
@@ -427,8 +427,8 @@ export const Terminal3: React.FC<Terminal3Props> = ({ initialPass = 'SWEEP' }) =
             </div>
           </div>
 
-          <div style={{ marginTop: '20px', display: 'flex', justifyContent: 'center' }}>
-            <span className="telemetry-pill telemetry-emerald" style={{ fontSize: '1.4rem' }}>
+          <div style={{ marginTop: '28px', display: 'flex', justifyContent: 'center' }}>
+            <span className="telemetry-pill telemetry-emerald" style={{ fontSize: '1.85rem', padding: '12px 28px' }}>
               &gt; DIVERSIFICATION: PASSED (&lt;95% AAI DIVERGENCE MET) // NOVEL SPECIES
             </span>
           </div>
